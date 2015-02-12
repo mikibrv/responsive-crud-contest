@@ -1,0 +1,8 @@
+# Use PHP 5.4
+#AddType application/x-httpd-php54 .php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+	 RewriteCond %{REQUEST_FILENAME} !-f
+
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
