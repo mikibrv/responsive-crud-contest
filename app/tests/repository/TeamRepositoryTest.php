@@ -28,9 +28,9 @@ class TeamRepositoryTest extends TestCase
 
         $this->createTeam();
 
-        $wasNameTaken = new NameIsUnique($repository, "Shiny Stars");
+        $wasNameTaken = new NameIsUnique($repository, "Test Shiny Stars");
         $this->assertFalse($wasNameTaken->apply());
-        $teamList = $repository->all(0, 1, array("name" => "Shiny Stars")); // we should have it
+        $teamList = $repository->all(0, 1, array("name" => "Test Shiny Stars")); // we should have it
         $this->assertEquals(1, sizeof($teamList));
         /**
          * /** @var Team $team
@@ -38,7 +38,7 @@ class TeamRepositoryTest extends TestCase
         $team = $teamList[0];
         $this->assertNotNull($team->getId()); //we should update the name;
 
-        $team->setName("Was Shiny Stars");
+        $team->setName("Test Was Shiny Stars");
         $repository->update($team);
         $this->assertTrue($wasNameTaken->apply()); //now this should be fine, since we changed the name
 
@@ -55,7 +55,7 @@ class TeamRepositoryTest extends TestCase
     {
         return $this->getTeamRepository()->create(
             TeamBuilder::create($this->getTeamRepository())
-                ->name("Shiny Stars")
+                ->name("Test Shiny Stars")
                 ->lastPlayed(new \DateTime('now'))
                 ->addWon(1)
                 ->addLost(1)
@@ -66,4 +66,10 @@ class TeamRepositoryTest extends TestCase
         );
     }
 
+
+    public function testRetrieveTeamsOrderedByRank()
+    {
+        $teamsOrdered = $this->getTeamRepository()->retrieveTeamsOrderedByRank(0, 100);
+        $this->assertNotNull($teamsOrdered);
+    }
 } 

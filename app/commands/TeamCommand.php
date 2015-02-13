@@ -20,6 +20,8 @@ class TeamCommand
 
     use JSerialize;
 
+    public $id;
+    public $rank;
     public $name;
     public $lastPlayed;
     public $won;
@@ -27,5 +29,6 @@ class TeamCommand
     public $draw;
     public $goalsAgainst;
     public $goalsFor;
+    public $location;
 
 } 

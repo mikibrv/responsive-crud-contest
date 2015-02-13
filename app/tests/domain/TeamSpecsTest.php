@@ -11,10 +11,17 @@ namespace MikiBrv\Test\Domain;
 
 use MikiBrv\Domain\Builders\TeamBuilder;
 use MikiBrv\Domain\Models\Team;
+use MikiBrv\Domain\Specs\Team\NameIsUnique;
 use MikiBrv\Test\TestCase;
 
 class TeamSpecsTest extends TestCase
 {
+
+    public function testIsNameUnique()
+    {
+        $spec = new NameIsUnique($this->getTeamRepository(), "a random unusual name");
+        $this->assertTrue($spec->apply());
+    }
 
     public function testTotalPlayed()
     {

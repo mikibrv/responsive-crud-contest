@@ -124,7 +124,8 @@ return array(
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
         'MikiBrv\Providers\RepositoryProvider',
-        'MikiBrv\Providers\TeamServiceProvider'
+        'MikiBrv\Providers\TeamServiceProvider',
+        'MikiBrv\Providers\EventProvider'
 
     ),
 

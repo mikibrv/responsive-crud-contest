@@ -1,0 +1,22 @@
+{
+    "name": "responsive-crud-contest",
+    "version": "0.0.1",
+    "homepage": "https://github.com/mikibrv/responsive-crud-contest",
+    "authors": [
+        "Miki"
+    ],
+    "description": "Just for a contest",
+    "main": "public/index.php",
+    "keywords": [
+        "laravel",
+        "bootstrap"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

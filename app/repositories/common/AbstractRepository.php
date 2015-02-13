@@ -54,6 +54,20 @@ abstract class AbstractRepository implements IRepository
     }
 
     /**
+     * @param []
+     * @return mixed
+     */
+    public function bulkUpdate($entities)
+    {
+        foreach ($entities as $entity) {
+            $this->entityManager->merge($entity);
+        }
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+    }
+
+
+    /**
      * @param $entity
      * @return mixed
      */

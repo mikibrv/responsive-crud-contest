@@ -35,6 +35,12 @@ interface IRepository
     public function update($entity);
 
     /**
+     * @param []
+     * @return mixed
+     */
+    public function bulkUpdate($entities);
+
+    /**
      * @param $entity
      * @return mixed
      */

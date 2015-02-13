@@ -6,7 +6,7 @@
  * Time: 3:23 AM
  */
 
-namespace MikiBrv\Test\services;
+namespace MikiBrv\Test\Services;
 
 
 use MikiBrv\Commands\TeamCommand;
@@ -18,7 +18,7 @@ class TeamServiceTest extends TestCase
     public function testRegisterTeam()
     {
         $command = new TeamCommand();
-        $command->name = "Loud Chaps";
+        $command->name = "Test Chaps";
         $command->draw = 0;
         $command->lost = 1;
         $command->won = 3;
@@ -26,6 +26,13 @@ class TeamServiceTest extends TestCase
         $command->goalsFor = 10;
 
 
-        $this->getTeamService()->registerTeam($command);
+        $team = $this->getTeamService()->registerTeam($command);
+        $command->id = $team->getId();
+        $this->getTeamService()->removeTeam($command);
+    }
+
+    public function testRecomputeRanks()
+    {
+        $this->getTeamService()->recomputeRanks();
     }
 } 
