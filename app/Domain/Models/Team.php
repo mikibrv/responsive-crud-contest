@@ -13,7 +13,6 @@ use MikiBrv\Domain\Specs\Team\GoalDiff;
 use MikiBrv\Domain\Specs\Team\TeamPoints;
 use MikiBrv\Domain\Specs\Team\TotalPlayed;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
-
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use MikiBrv\Entities\EntityTraits\EntityID;
 use MikiBrv\Entities\EntityTraits\JSerialize;
@@ -43,31 +42,27 @@ class Team extends AbstractModel
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $won;
+    private $won = 0;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $draw;
+    private $draw = 0;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $lost;
+    private $lost = 0;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $goalsFor;
+    private $goalsFor = 0;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $goalsAgainst;
+    private $goalsAgainst = 0;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $points;
-
-    private $goalsDiff = null;
-
-    private $totalPlayed = null;
+    private $points = 0;
 
     /**
      * @param mixed $draw
@@ -75,6 +70,7 @@ class Team extends AbstractModel
     public function setDraw($draw)
     {
         $this->draw = $draw;
+        $this->setPoints();
     }
 
     /**
@@ -83,6 +79,15 @@ class Team extends AbstractModel
     public function getDraw()
     {
         return $this->draw;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGoalDiff()
+    {
+        $spec = new GoalDiff($this);
+        return $spec->apply();
     }
 
     /**
@@ -99,17 +104,6 @@ class Team extends AbstractModel
     public function getGoalsAgainst()
     {
         return $this->goalsAgainst;
-    }
-
-    /**
-     * @return null
-     */
-    public function getGoalsDiff()
-    {
-        if ($this->goalsDiff == null) {
-            $this->setGoalsDiff();
-        }
-        return $this->goalsDiff;
     }
 
     /**
@@ -177,20 +171,20 @@ class Team extends AbstractModel
     }
 
     /**
-     * @ORM\PreUpdate
      */
-    public function setPoints()
+    private function setPoints()
     {
         $spec = new TeamPoints($this);
         $this->points = $spec->apply();
     }
 
+    /**
+     * @return mixed
+     */
     public function getPoints()
     {
-        if ($this->points == null) {
-            $this->setPoints();
-        }
-        return $this->points;
+        $spec = new TeamPoints($this);
+        return $spec->apply();
     }
 
     /**
@@ -209,29 +203,14 @@ class Team extends AbstractModel
         return $this->rank;
     }
 
-    public function setGoalsDiff()
-    {
-        $spec = new GoalDiff($this);
-        $this->goalsDiff = $spec->apply();
-    }
-
-
-    public function setTotalPlayed()
-    {
-        $spec = new TotalPlayed($this);
-        $this->totalPlayed = $spec->apply();
-    }
-
 
     /**
-     * @return null
+     * @return mixed
      */
     public function getTotalPlayed()
     {
-        if ($this->totalPlayed == null) {
-            $this->setTotalPlayed();
-        }
-        return $this->totalPlayed;
+        $spec = new TotalPlayed($this);
+        return $spec->apply();
     }
 
     /**
@@ -240,6 +219,7 @@ class Team extends AbstractModel
     public function setWon($won)
     {
         $this->won = $won;
+        $this->setPoints();
     }
 
     /**

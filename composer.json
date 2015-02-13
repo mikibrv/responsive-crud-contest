@@ -13,13 +13,13 @@
 		"classmap": [
 			"app/commands",
 			"app/controllers",
-			"app/models",
+			"app/Domain",
 			"app/tests/TestCase.php",
             "app/tests/service/ServiceTestCase.php",
             "app/repositories",
             "app/providers",
-            "app/service",
-            "app/util"
+            "app/services",
+            "app/utils"
 		]
 	},
 	"scripts": {

@@ -9,18 +9,29 @@
 namespace Test\Domain;
 
 
+use MikiBrv\Domain\Builders\TeamBuilder;
 use MikiBrv\Domain\Models\Team;
-use MikiBrv\Domain\Specs\Team\TeamPoints;
 use Test\TestCase;
 
 class TeamSpecsTest extends TestCase
 {
 
+    public function testTotalPlayed()
+    {
+        $team = $this->createTeamObject();
+        $this->assertEquals(12, $team->getTotalPlayed());
+    }
+
+    public function testGoalsDiffSpec()
+    {
+        $team = $this->createTeamObject();
+        $this->assertEquals(-8, $team->getGoalDiff());
+    }
+
     public function testTeamPointsSpec()
     {
         $team = $this->createTeamObject();
-        $spec = new TeamPoints($team);
-        $this->assertEquals(31,$spec->apply());
+        $this->assertEquals(31, $team->getPoints());
     }
 
     /**
@@ -28,11 +39,14 @@ class TeamSpecsTest extends TestCase
      */
     private function createTeamObject()
     {
-        $team = new Team();
-        $team->setWon(10);
-        $team->setLost(1);
-        $team->setDraw(1);
-        return $team;
+        return TeamBuilder::create()
+            ->name("Funky Town")
+            ->addWon(10)
+            ->addDraw(1)
+            ->addLost(1)
+            ->goalsAgainst(10)
+            ->goalsFor(2)
+            ->build();
     }
 
 } 
