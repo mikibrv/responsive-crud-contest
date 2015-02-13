@@ -12,6 +12,7 @@ use DateTime;
 use Doctrine\ORM\EntityNotFoundException;
 use Event;
 use MikiBrv\Commands\TeamCommand;
+use MikiBrv\Commands\TeamSearchCommand;
 use MikiBrv\Domain\Builders\TeamBuilder;
 use MikiBrv\Domain\Events\RankChangedListener;
 use MikiBrv\Domain\Models\Team;
@@ -35,6 +36,12 @@ interface ITeamService
      * @return mixed
      */
     public function removeTeam(TeamCommand $command);
+
+    /**
+     * @param TeamSearchCommand $teamSearchCommand
+     * @return array
+     */
+    public function fetch(TeamSearchCommand $teamSearchCommand);
 
 }
 
@@ -94,5 +101,14 @@ class TeamService extends AbstractService implements ITeamService
         } else {
             //maybe a throw entitynotfound
         }
+    }
+
+    /**
+     * @param TeamSearchCommand $teamSearchCommand
+     * @return array
+     */
+    public function fetch(TeamSearchCommand $teamSearchCommand)
+    {
+        return array();
     }
 }
