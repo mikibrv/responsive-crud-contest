@@ -24,16 +24,22 @@
     <link rel="stylesheet" href="/static/vendor/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/static/vendor/bootstrap/dist/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/static/vendor/datatables/media/css/jQuery.dataTables.min.css"/>
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/index.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
 <body>
 <div id="wrapper">
-    @section('menubars')
-    @show
 
+    @include('templates.menu')
 
-    @yield('content')
+    <div id="page-wrapper">
+        @yield('content')
+        @include('templates.footer')
+    </div>
+
 
     <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
 

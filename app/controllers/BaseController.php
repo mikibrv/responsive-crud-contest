@@ -9,9 +9,11 @@
 namespace MikiBrv\Controllers;
 
 
+use Controller;
 use MikiBrv\Services\ITeamService;
+use View;
 
-class BaseController
+class BaseController extends Controller
 {
     /**
      * @var \MikiBrv\Services\ITeamService
@@ -22,6 +24,17 @@ class BaseController
     {
         $this->teamService = $teamService;
 
+    }
+
+    /**
+     * @param $view
+     * @param $model
+     * @return $this
+     */
+    protected function renderView($view, $model)
+    {
+        return View::make("layouts/main")->with($model)
+            ->nest("content", $view, $model);
     }
 
 } 

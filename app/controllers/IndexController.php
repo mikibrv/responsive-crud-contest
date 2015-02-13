@@ -9,6 +9,13 @@
 namespace MikiBrv\Controllers;
 
 
-class IndexController {
+
+class IndexController extends BaseController
+{
+
+    public function index()
+    {
+        return $this->renderView("index", array());
+    }
 
 } 
