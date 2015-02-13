@@ -10,7 +10,7 @@ namespace MikiBrv\Domain\Builders;
 
 
 use MikiBrv\Domain\Models\Team;
-use MikiBrv\Domain\Specs\Team\InvalidTeamException;
+use MikiBrv\Domain\Specs\Team\Exceptions\InvalidTeamException;
 use MikiBrv\Domain\Specs\Team\NameIsUnique;
 use MikiBrv\Repositories\ITeamRepository;
 use Validator;
@@ -45,12 +45,14 @@ class TeamBuilder implements IBuilder
             array(
                 'won' => $this->team->getWon(),
                 'lost' => $this->team->getLost(),
-                'draw' => $this->team->getDraw()
+                'draw' => $this->team->getDraw(),
+                'name' => $this->team->getName()
             ),
             array(
                 'won' => array('required', 'min:0'),
                 'lost' => array('required', 'min:0'),
-                'draw' => array('required', 'min:0')
+                'draw' => array('required', 'min:0'),
+                'name' => array('required', 'min:2')
             )
         );
         if ($validator->fails()) {
@@ -84,7 +86,9 @@ class TeamBuilder implements IBuilder
      */
     public function addDraw($draw)
     {
-        $this->team->setDraw($draw);
+        if ($draw != null) {
+            $this->team->setDraw($draw);
+        }
         return $this;
     }
 
@@ -95,7 +99,9 @@ class TeamBuilder implements IBuilder
      */
     public function addLost($lost)
     {
-        $this->team->setLost($lost);
+        if ($lost != null) {
+            $this->team->setLost($lost);
+        }
         return $this;
     }
 
@@ -105,7 +111,9 @@ class TeamBuilder implements IBuilder
      */
     public function name($name)
     {
-        $this->team->setName($name);
+        if ($name != null) {
+            $this->team->setName($name);
+        }
         return $this;
     }
 
@@ -115,7 +123,9 @@ class TeamBuilder implements IBuilder
      */
     public function goalsFor($goalsFor)
     {
-        $this->team->setGoalsFor($goalsFor);
+        if ($goalsFor != null) {
+            $this->team->setGoalsFor($goalsFor);
+        }
         return $this;
     }
 
@@ -126,7 +136,9 @@ class TeamBuilder implements IBuilder
      */
     public function goalsAgainst($goalsAgainst)
     {
-        $this->team->setGoalsAgainst($goalsAgainst);
+        if ($goalsAgainst != null) {
+            $this->team->setGoalsAgainst($goalsAgainst);
+        }
         return $this;
     }
 
@@ -137,6 +149,16 @@ class TeamBuilder implements IBuilder
     public function lastPlayed(\DateTime $lastPlayed)
     {
         $this->team->setLastPlayed($lastPlayed);
+        return $this;
+    }
+
+    /**
+     * @param $location
+     * @return $this
+     */
+    public function location($location)
+    {
+        $this->team->setLocation($location);
         return $this;
     }
 }

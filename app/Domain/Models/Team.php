@@ -9,6 +9,9 @@
 namespace MikiBrv\Domain\Models;
 
 use Doctrine\ORM\Mapping as ORM;
+use Event;
+use MikiBrv\Domain\Events\TeamPointsIntegrityListener;
+use MikiBrv\Domain\Specs\Team\Exceptions\TeamPointsIntegrityException;
 use MikiBrv\Domain\Specs\Team\GoalDiff;
 use MikiBrv\Domain\Specs\Team\TeamPoints;
 use MikiBrv\Domain\Specs\Team\TotalPlayed;
@@ -29,11 +32,19 @@ class Team extends AbstractModel
     use JSerialize;
     use Timestamps;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
     private $rank;
     /**
      * @ORM\Column(type="string",  nullable=false, unique=true)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string",  nullable=true)
+     */
+    private $location;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -178,12 +189,18 @@ class Team extends AbstractModel
     }
 
     /**
-     * @return mixed
+     * @return int
+     * @throws \MikiBrv\Domain\Specs\Team\Exceptions\TeamPointsIntegrityException
      */
     public function getPoints()
     {
         $spec = new TeamPoints($this);
-        return $spec->apply();
+        $computedPoints = $spec->apply();
+        if ($this->points != $computedPoints) {
+            $this->points = $computedPoints;
+            Event::fire(TeamPointsIntegrityListener::getName(), $this);
+        }
+        return $this->points;
     }
 
     /**
@@ -229,5 +246,20 @@ class Team extends AbstractModel
         return $this->won;
     }
 
+    /**
+     * @param mixed $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
 
 }

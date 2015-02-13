@@ -6,9 +6,22 @@
  * Contact: miki@softwareengineer.ro
  */
 
-namespace MikiBrv\Domain\events;
+namespace MikiBrv\Domain\Events;
 
 
-class RankChangedListener {
+use App;
+use MikiBrv\Services\ITeamService;
 
-} 
+class RankChangedListener extends AbstractEvent implements IEventListener
+{
+
+    public function handle($data)
+    {
+        $this->teamService->recomputeRanks();
+    }
+
+    public static function getName()
+    {
+        return "update.rank";
+    }
+}

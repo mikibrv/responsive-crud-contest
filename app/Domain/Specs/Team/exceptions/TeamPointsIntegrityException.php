@@ -9,6 +9,6 @@
 namespace MikiBrv\Domain\Specs\Team\Exceptions;
 
 
-class TeamPointsIntegrityException {
+class TeamPointsIntegrityException extends \Exception{
 
 } 

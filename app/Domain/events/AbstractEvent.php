@@ -9,6 +9,25 @@
 namespace MikiBrv\Domain\Events;
 
 
-class AbstractEvent {
+use App;
+use MikiBrv\Repositories\ITeamRepository;
+use MikiBrv\Services\ITeamService;
+
+abstract class AbstractEvent
+{
+    /**
+     * @var ITeamService
+     */
+    protected $teamService;
+    /**
+     * @var ITeamRepository
+     */
+    protected $teamRepository;
+
+    public function __construct()
+    {
+        $this->teamService = App::make("MikiBrv\Services\ITeamService");
+        $this->teamRepository = App::make("MikiBrv\Repositories\ITeamRepository");
+    }
 
 } 

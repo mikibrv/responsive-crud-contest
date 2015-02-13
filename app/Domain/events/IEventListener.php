@@ -6,9 +6,13 @@
  * Contact: miki@softwareengineer.ro
  */
 
-namespace MikiBrv\Domain\events;
+namespace MikiBrv\Domain\Events;
 
 
-interface IEventListener {
+interface IEventListener
+{
 
+    public function handle($data);
+
+    public static function getName();
 } 

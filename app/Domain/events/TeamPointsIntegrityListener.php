@@ -9,6 +9,21 @@
 namespace MikiBrv\Domain\Events;
 
 
-class TeamPointsIntegrityListener {
+use MikiBrv\Domain\Models\Team;
 
-} 
+class TeamPointsIntegrityListener extends AbstractEvent implements IEventListener
+{
+
+    /**
+     * @param Team $data
+     */
+    public function handle($data)
+    {
+        $this->teamRepository->update($data);
+    }
+
+    public static function getName()
+    {
+        return "team.points.data.integrity.violation";
+    }
+}
