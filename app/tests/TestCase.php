@@ -1,28 +1,44 @@
 <?php
-namespace Test;
+namespace MikiBrv\Test;
 
 use App;
-class TestCase extends \Illuminate\Foundation\Testing\TestCase {
+use MikiBrv\Repositories\ITeamRepository;
+use MikiBrv\Services\ITeamService;
 
-	/**
-	 * Creates the application.
-	 *
-	 * @return \Symfony\Component\HttpKernel\HttpKernelInterface
-	 */
-	public function createApplication()
-	{
-		$unitTesting = true;
+class TestCase extends \Illuminate\Foundation\Testing\TestCase
+{
 
-		$testEnvironment = 'testing';
+    /**
+     * Creates the application.
+     *
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     */
+    public function createApplication()
+    {
+        $unitTesting = true;
 
-		return require __DIR__.'/../../bootstrap/start.php';
-	}
+        $testEnvironment = 'testing';
 
-    protected  function setUPRepositories(){
+        return require __DIR__ . '/../../bootstrap/start.php';
+    }
+
+    /**
+     * @return ITeamRepository
+     */
+    protected function getTeamRepository()
+    {
         /**
          * get repositories from IoC.
          */
-       // $this->langRepository = App::make("Transp\Repositories\Structure\ILangRepository");
+        return App::make("MikiBrv\Repositories\ITeamRepository");
+    }
+
+    /**
+     * @return ITeamService
+     */
+    protected function getTeamService()
+    {
+        return App::make("MikiBrv\Services\ITeamService");
     }
 
 }

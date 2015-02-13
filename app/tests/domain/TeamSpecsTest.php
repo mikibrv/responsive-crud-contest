@@ -6,12 +6,12 @@
  * Contact: miki@softwareengineer.ro
  */
 
-namespace Test\Domain;
+namespace MikiBrv\Test\Domain;
 
 
 use MikiBrv\Domain\Builders\TeamBuilder;
 use MikiBrv\Domain\Models\Team;
-use Test\TestCase;
+use MikiBrv\Test\TestCase;
 
 class TeamSpecsTest extends TestCase
 {
@@ -39,7 +39,7 @@ class TeamSpecsTest extends TestCase
      */
     private function createTeamObject()
     {
-        return TeamBuilder::create()
+        return TeamBuilder::create($this->getTeamRepository())
             ->name("Funky Town")
             ->addWon(10)
             ->addDraw(1)

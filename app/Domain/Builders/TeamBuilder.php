@@ -11,6 +11,8 @@ namespace MikiBrv\Domain\Builders;
 
 use MikiBrv\Domain\Models\Team;
 use MikiBrv\Domain\Specs\Team\InvalidTeamException;
+use MikiBrv\Domain\Specs\Team\NameIsUnique;
+use MikiBrv\Repositories\ITeamRepository;
 use Validator;
 
 class TeamBuilder implements IBuilder
@@ -20,18 +22,21 @@ class TeamBuilder implements IBuilder
      * @var Team
      */
     private $team;
+    private $teamRepository;
 
-    private function __construct()
+    private function __construct(ITeamRepository $teamRepository)
     {
         $this->team = new Team();
+        $this->teamRepository = $teamRepository;
     }
 
     /**
+     * @param ITeamRepository $teamRepository
      * @return TeamBuilder
      */
-    public static function create()
+    public static function create(ITeamRepository $teamRepository)
     {
-        return new TeamBuilder();
+        return new TeamBuilder($teamRepository);
     }
 
     public function validate()
@@ -49,6 +54,10 @@ class TeamBuilder implements IBuilder
             )
         );
         if ($validator->fails()) {
+            throw new InvalidTeamException();
+        }
+        $nameIsUnique = new NameIsUnique($this->teamRepository, $this->team->getName());
+        if (!$nameIsUnique->apply()) {
             throw new InvalidTeamException();
         }
     }
@@ -118,6 +127,16 @@ class TeamBuilder implements IBuilder
     public function goalsAgainst($goalsAgainst)
     {
         $this->team->setGoalsAgainst($goalsAgainst);
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $lastPlayed
+     * @return $this
+     */
+    public function lastPlayed(\DateTime $lastPlayed)
+    {
+        $this->team->setLastPlayed($lastPlayed);
         return $this;
     }
 }

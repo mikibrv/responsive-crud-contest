@@ -15,7 +15,6 @@
 			"app/controllers",
 			"app/Domain",
 			"app/tests/TestCase.php",
-            "app/tests/service/ServiceTestCase.php",
             "app/repositories",
             "app/providers",
             "app/services",

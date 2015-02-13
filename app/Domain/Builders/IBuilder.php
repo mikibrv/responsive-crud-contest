@@ -9,10 +9,10 @@
 namespace MikiBrv\Domain\Builders;
 
 
+use MikiBrv\Repositories\Common\IRepository;
+
 interface IBuilder
 {
-
-    public static function create();
 
     public function build();
 

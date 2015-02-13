@@ -28,11 +28,10 @@ class Team extends AbstractModel
     use EntityID;
     use JSerialize;
     use Timestamps;
-    use SoftDeletes;
 
     private $rank;
     /**
-     * @ORM\Column(type="string",  nullable=false)
+     * @ORM\Column(type="string",  nullable=false, unique=true)
      */
     private $name;
     /**
